@@ -1,0 +1,8 @@
+.depend
+*.exe
+*.o
+*.avi
+*.avs
+*.wav
+*.pcm
+*.raw
