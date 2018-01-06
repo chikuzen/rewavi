@@ -295,3 +295,7 @@ __pycache__/
 *.wav
 *.pcm
 *.raw
+
+# Cake
+tools/
+artifacts/
