@@ -82,16 +82,17 @@ release_stream:
         goto close;
 
     uint32_t chmask = 0;
-    if (!_stricmp(argv[3], "-x")) {
-        if (!argv[4]) {
-            uint32_t default_chmask[DEFAULT_MASK_COUNT] = DEFAULT_MASK;
-            chmask = wavefmt.nChannels < DEFAULT_MASK_COUNT ?
-                     default_chmask[wavefmt.nChannels] : (1 << wavefmt.nChannels) - 1;
-        } else {
+    if (argc == 5) {
+        if (!_stricmp(argv[3], "-x")) {
             chmask = atoi(argv[4]);
             CLOSE_IF_ERR(numofbits(chmask) != wavefmt.nChannels,
-                         "Invalid channel mask was specified.\n");
+                "Invalid channel mask was specified.\n");
         }
+    }
+    else {
+        uint32_t default_chmask[DEFAULT_MASK_COUNT] = DEFAULT_MASK;
+        chmask = wavefmt.nChannels < DEFAULT_MASK_COUNT ?
+            default_chmask[wavefmt.nChannels] : (1 << wavefmt.nChannels) - 1;
     }
 
     int dupout = 0;
@@ -110,8 +111,10 @@ release_stream:
     LONG samples_read;
     LONG nextsample = 0;
 
-    if (!_stricmp(argv[3], "-r"))
-        goto write_data;
+    if (argc == 4) {
+        if (!_stricmp(argv[3], "-r"))
+            goto write_data;
+    }
 
     uint32_t headersize = chmask ? 60 : 36;
     uint64_t filesize = (uint64_t)wavefmt.nBlockAlign * stream_info.dwLength;
