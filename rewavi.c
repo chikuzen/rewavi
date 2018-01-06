@@ -1,5 +1,6 @@
 #include "common.h"
-#include <mmreg.h>
+
+#pragma comment(lib, "vfw32.lib")
 
 #define SUBFORMAT_GUID(fmt) \
     {fmt, 0x0000, 0x0010, {0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}}
@@ -28,7 +29,7 @@ int main(int argc, char **argv)
 
     int retcode = 0;
 
-    if (!argv[2] || !stricmp(argv[2], "-x") || !stricmp(argv[2], "-r")) {
+    if (!argv[2] || !_stricmp(argv[2], "-x") || !_stricmp(argv[2], "-r")) {
         PRINT_LOG(LOG_WARNING, "output target is not specified.\n");
         retcode = 1;
     }
@@ -80,16 +81,17 @@ release_stream:
         goto close;
 
     uint32_t chmask = 0;
-    if (!stricmp(argv[3], "-x")) {
-        if (!argv[4]) {
-            uint32_t default_chmask[DEFAULT_MASK_COUNT] = DEFAULT_MASK;
-            chmask = wavefmt.nChannels < DEFAULT_MASK_COUNT ?
-                     default_chmask[wavefmt.nChannels] : (1 << wavefmt.nChannels) - 1;
-        } else {
+    if (argc == 5) {
+        if (!_stricmp(argv[3], "-x")) {
             chmask = atoi(argv[4]);
             CLOSE_IF_ERR(numofbits(chmask) != wavefmt.nChannels,
-                         "Invalid channel mask was specified.\n");
+                "Invalid channel mask was specified.\n");
         }
+    }
+    else {
+        uint32_t default_chmask[DEFAULT_MASK_COUNT] = DEFAULT_MASK;
+        chmask = wavefmt.nChannels < DEFAULT_MASK_COUNT ?
+            default_chmask[wavefmt.nChannels] : (1 << wavefmt.nChannels) - 1;
     }
 
     int dupout = 0;
@@ -99,7 +101,7 @@ release_stream:
         _setmode(dupout, _O_BINARY);
         output_fh = _fdopen(dupout, "wb");
     } else
-        output_fh = fopen(argv[2], "wb");
+        fopen_s(&output_fh, argv[2], "wb");
 
     CLOSE_IF_ERR(!output_fh, "Fail to create/open file.\n");
 
@@ -108,8 +110,10 @@ release_stream:
     LONG samples_read;
     LONG nextsample = 0;
 
-    if (!stricmp(argv[3], "-r"))
-        goto write_data;
+    if (argc == 4) {
+        if (!_stricmp(argv[3], "-r"))
+            goto write_data;
+    }
 
     uint32_t headersize = chmask ? 60 : 36;
     uint64_t filesize = (uint64_t)wavefmt.nBlockAlign * stream_info.dwLength;
@@ -153,7 +157,7 @@ write_data:
     /* fraction processing at first. */
     AVIStreamRead(avistream, 0, stream_info.dwLength % samples_in_buffer,
                   &buffer, BUFFSIZE, NULL, &samples_read);
-    while (nextsample < stream_info.dwLength) {
+    while ((DWORD)nextsample < stream_info.dwLength) {
         fwrite(buffer, wavefmt.nBlockAlign, samples_read, output_fh);
         nextsample += samples_read;
         AVIStreamRead(avistream, nextsample, samples_in_buffer, &buffer,

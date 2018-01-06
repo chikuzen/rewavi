@@ -1,0 +1,64 @@
+Usage: rewavi <input> <output> [ -r | -x [<mask>] ]
+  input  : input AVI1.0( or AviSynth Script)file name.
+  output : output WAV file name. '-' means output to stdout
+  -r : Write a raw file of samples without the WAV header.
+  -x : Write an extended WAV header containing channel mask for
+       multi-channel audio.
+       If channel mask is not specified, the defaut value will be set.
+
+ 'rewavi -h' will display more complicated description.
+
+This utility extracts the first uncompressed PCM audio track
+from an AVI1.0 file and saves it to a WAV file. This is not quite
+useful for most AVI files since they usually contain some kind
+of compressed audio, but it can come handy when it's needed to
+save an audio track from AviSynth.
+
+If <input> is a valid AVI1.0 file which contains PCM audio,
+the audio track will be written to <output> as a WAV(or RAW) file.
+If '-' is passed as <output>, the WAV file will be written
+to the standard output.
+If <output> is not given, only information will be printed
+about the audio track.
+
+On success, the exit code will be 0 and the first line printed
+to the standard error will look like the following:
+    streamID <n>: <c>channels, <r>Hz, <b>bits, <l>sec.
+
+Where <n> is IDnumber of audio track that comtaining PCM audio, <c> is
+the number of audio channels, <r> is the sampling rate, <b> is the number
+of bits per sample and <l> is the length of the track in seconds.
+
+If the audio track contains floating-point samples, the next line
+printed to the standard error will be:
+Audio track contains floating-point samples.
+
+If an error occurs, the exit code will be 1 and some useful error
+message will be printed to the standard error.
+
+WAV files larger than 4 GB may be created. However, such WAV files
+are non-standard and may not be handled correctly by some players
+and encoders. A warning will be printed to the standard error when
+such a WAV file is created.
+
+The default channel masks are:
+
+Mask  Ch.  MS channels                   Description
+----  ---  ----------------------------  ----------------
+   4   1                       FC        Mono
+   3   2                          FR FL  Stereo
+ 259   3   BC                     FR FL  First Surround
+  51   4              BR BL       FR FL  Quadro
+  55   5              BR BL    FC FR FL  like Dpl II (without LFE)
+  63   6              BR BL LF FC FR FL  Standard Surround
+ 319   7   BC         BR BL LF FC FR FL  With back center
+ 255   8      FLC FRC BR BL LF FC FR FL  With front center left/right
+
+Some other common channel masks:
+
+Mask  Ch. MS channels                    Description
+----  --- -----------------------------  ----------------
+   7   3                       FC FR FL
+ 263   4  BC                   FC FR FL  like Dpl I
+ 271   5  BC                LF FC FR FL
+  59   5              BR BL LF    FR FL
