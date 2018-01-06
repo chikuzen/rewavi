@@ -87,7 +87,7 @@ int main (int argc, char **argv)
         _setmode(dupout, _O_BINARY);
         output_fh = _fdopen(dupout, "wb");
     } else
-        output_fh = fopen(argv[1], "wb");
+        fopen_s(&output_fh, argv[1], "wb");
 
     CLOSE_IF_ERR(!output_fh, "Fail to create/open file.\n");
 
@@ -107,7 +107,7 @@ int main (int argc, char **argv)
 
     char data[BUFFSIZE] = {0};
     uint64_t wrote = filesize % BUFFSIZE;
-    fwrite(data, 1, wrote, output_fh);
+    fwrite(data, 1, (size_t)wrote, output_fh);
     while (wrote < filesize) {
         fwrite(data, 1, BUFFSIZE, output_fh);
         wrote += BUFFSIZE;
