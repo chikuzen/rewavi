@@ -1,6 +1,8 @@
 #include "common.h"
 #include <mmreg.h>
 
+#pragma comment(lib, "vfw32.lib")
+
 #define SUBFORMAT_GUID(fmt) \
     {fmt, 0x0000, 0x0010, {0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}}
 
