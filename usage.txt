@@ -1,0 +1,9 @@
+Usage: rewavi <input> <output> [ -r | -x [<mask>] ]
+  input  : input AVI1.0( or AviSynth Script)file name.
+  output : output WAV file name. '-' means output to stdout
+  -r : Write a raw file of samples without the WAV header.
+  -x : Write an extended WAV header containing channel mask for
+       multi-channel audio.
+       If channel mask is not specified, the defaut value will be set.
+
+ 'rewavi -h' will display more complicated description.
