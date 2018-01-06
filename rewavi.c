@@ -1,5 +1,4 @@
 #include "common.h"
-#include <mmreg.h>
 
 #pragma comment(lib, "vfw32.lib")
 
