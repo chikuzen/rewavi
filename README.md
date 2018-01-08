@@ -89,6 +89,26 @@ Open rewavi.sln in Visual Studios 2017 or above.
 
 This is fork of [rewavi](https://github.com/chikuzen/rewavi) which is rewritten/modified [WAVI](http://sourceforge.net/projects/wavi-avi2wav/).
 
+### REWAVI
+
+```
+REWAVI - rewritten/modified WAVI
+(c) 2011 Oka Motofumi
+(c) 2018 Wieslaw Soltes
+WAVI original - (c) 2007 Tamas Kurucsai, with lots of help from tebasuna51
+Licensed under the terms of the GNU General Public License version2 or later.
+```
+
+### RESILENCE
+
+```
+RESILENCE - rewritten/modified SILENCE
+(c) 2011 Oka Motofumi
+(c) 2018 Wieslaw Soltes
+original SILENCE (c) 2007 Tamas Kurucsai
+Licensed under the terms of the GNU General Public License verion2 or later
+```
+
 ## License
 
 rewavi is licensed under the [GNU Genenral Public License version 2 or later](LICENSE.TXT).
