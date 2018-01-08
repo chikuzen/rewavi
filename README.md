@@ -12,8 +12,8 @@ rewritten/modified WAVI
 
 | Platform           | Character Set  | Version   | Download                                                                                                                |
 |--------------------|----------------|-----------|-------------------------------------------------------------------------------------------------------------------------|
-| Windows 32-bit     | MBCS           | 0.03      | [rewavi-0.03-Win32.zip](https://github.com/wieslawsoltes/rewavi/releases/download/0.03/rewavi-0.03-Win32.zip)           |
-| Windows 64-bit     | MBCS           | 0.03      | [rewavi-0.03-x64.zip](https://github.com/wieslawsoltes/rewavi/releases/download/0.03/rewavi-0.03-x64.zip)               |
+| Windows 32-bit     | MBCS           | 0.04      | [rewavi-0.04-Win32.zip](https://github.com/wieslawsoltes/rewavi/releases/download/0.04/rewavi-0.04-Win32.zip)           |
+| Windows 64-bit     | MBCS           | 0.04      | [rewavi-0.04-x64.zip](https://github.com/wieslawsoltes/rewavi/releases/download/0.04/rewavi-0.04-x64.zip)               |
 
 ## System requirements
 
@@ -34,6 +34,9 @@ REWAVI - tool of extract PCM audio stream from avi file.
 RESILENCE - tool of generate silence PCM WAV file.
 
 ## Changelog
+
+* v0.04 (2018-01-08)
+  - Fixed progress output.
 
 * v0.03 (2018-01-08)
   - Added progress output.
