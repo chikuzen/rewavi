@@ -211,13 +211,15 @@ release_stream:
     {
         fwrite(buffer, wavefmt.nBlockAlign, samples_read, output_fh);
         nextsample += samples_read;
-        fprintf(stderr, "\rProgress: %d%% (%ld/%ld)", 
-                (int)((100 * nextsample) / stream_info.dwLength), 
-                nextsample, stream_info.dwLength);
+
+        double fProgress = (double)nextsample / (double)stream_info.dwLength;
+        fprintf(stderr, "\rProgress: %d%% (%lu/%lu)", (int)(fProgress * 100), nextsample, stream_info.dwLength);
+
         AVIStreamRead(avistream, nextsample, samples_in_buffer, &buffer,
                       BUFFSIZE, NULL, &samples_read); /* The last reading is just ignored. */
     }
 
+    fprintf(stderr, "\n");
     fflush(output_fh);
 
     CLOSE_IF_ERR(nextsample != stream_info.dwLength, "Writing failed.\n");
