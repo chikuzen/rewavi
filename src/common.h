@@ -40,4 +40,3 @@ inline int rewavi_log(const char* name, log_t level, const char *message, ...)
     va_end(args);
     return level;
 }
-
