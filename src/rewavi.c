@@ -158,7 +158,7 @@ release_stream:
     char buffer[BUFFSIZE];
     uint32_t samples_in_buffer = BUFFSIZE / wavefmt.nBlockAlign;
     LONG samples_read;
-    LONG nextsample = 0;
+    DWORD nextsample = 0;
 
     if (format == FORMAT_WAV)
     {
@@ -207,10 +207,13 @@ release_stream:
     /* fraction processing at first. */
     AVIStreamRead(avistream, 0, stream_info.dwLength % samples_in_buffer,
                   &buffer, BUFFSIZE, NULL, &samples_read);
-    while ((DWORD)nextsample < stream_info.dwLength) 
+    while (nextsample < stream_info.dwLength) 
     {
         fwrite(buffer, wavefmt.nBlockAlign, samples_read, output_fh);
         nextsample += samples_read;
+        fprintf(stderr, _T("\rProgress: %d%% (%I64d/%I64d)"), 
+                (int)((100 * nextsample) / stream_info.dwLength), 
+                nextsample, stream_info.dwLength);
         AVIStreamRead(avistream, nextsample, samples_in_buffer, &buffer,
                       BUFFSIZE, NULL, &samples_read); /* The last reading is just ignored. */
     }
