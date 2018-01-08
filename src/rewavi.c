@@ -211,7 +211,7 @@ release_stream:
     {
         fwrite(buffer, wavefmt.nBlockAlign, samples_read, output_fh);
         nextsample += samples_read;
-        fprintf(stderr, "\rProgress: %d%% (%I64d/%I64d)", 
+        fprintf(stderr, "\rProgress: %d%% (%ld/%ld)", 
                 (int)((100 * nextsample) / stream_info.dwLength), 
                 nextsample, stream_info.dwLength);
         AVIStreamRead(avistream, nextsample, samples_in_buffer, &buffer,
