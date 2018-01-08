@@ -36,11 +36,11 @@ RESILENCE - tool of generate silence PCM WAV file.
 ## Changelog
 
 * v0.02 (2018-01-06)
-  - Visual Studio 2017 support.
-  - Bug fixes.
-  - x64 builds.
+  - Added Visual Studio 2017 support.
+  - Added x64 build configurarion.
   - Added Cake build script.
   - Add appveyor configuration for using Cake build system.
+  - Bug fixes.
 
 * v0.01 (2011-11-19)
   - Initial release.
